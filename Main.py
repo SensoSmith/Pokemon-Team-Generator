@@ -60,40 +60,57 @@ party = []
 
 hmList = [cut, fly, surf, strength, flash]
 
-# randomly select starter
-chosenStarter = random.choice(starters)
-party.append(chosenStarter)
-# test code start
-#print("TEST: Successfully added member: " + chosenStarter.name)
-# test code end
 
-# remove starters from available Pokemon list
-for i in range(3):
-    availablePokemonList.remove(starters[i])
-
-# mark appropriate HMs as covered by the starter
-hmList.remove(random.choice(chosenStarter.HMs))
-
-# randomly select five other party members
-for i in range(5):
+# function for verifying HM coverage
+def checkHM(candidate):
+    global party
+    global hmList
     counter = 0
+    if len(hmList) > 0:
+        if len(candidate.HMs) > 0:
+            for i in candidate.HMs:
+                if hmList.count(i) > 0:
+                    counter += 1
+            if counter > 0:
+                hmCoverage = list(candidate.HMs)
+                for i in candidate.HMs:
+                    if hmList.count(i) == 0:
+                        hmCoverage.remove(i)
+                if len(hmCoverage) > 0:
+                    hmList.remove(random.choice(hmCoverage))
+                    return 1
+            else:
+                return 0
+        else:
+            return 0
+    else:
+        return 1
+
+
+# function for selecting starter Pokemon
+def selectStarter():
+    global party
+    global availablePokemonList
+    chosenStarter = random.choice(starters)
+    party.append(chosenStarter)
+    # test code start
+    #print("TEST: Successfully added member: " + chosenStarter.name)
+    # test code end
+    for i in range(3):
+        availablePokemonList.remove(starters[i])
+
+    # mark appropriate HMs as covered by the starter
+    hmList.remove(random.choice(chosenStarter.HMs))
+
+
+# function for selecting the second Pokemon
+def select2():
+    global party
+    global availablePokemonList
     success = 0
     while success == 0:
         potentialMember = random.choice(availablePokemonList)
-        if len(hmList) > 0:
-            if len(potentialMember.HMs) > 0:
-                for i in potentialMember.HMs:
-                    if hmList.count(i) > 0:
-                        counter += 1
-                if counter > 0:
-                    hmCoverage = list(potentialMember.HMs)
-                    for i in potentialMember.HMs:
-                        if hmList.count(i) == 0:
-                            hmCoverage.remove(i)
-                    if len(hmCoverage) > 0:
-                        hmList.remove(random.choice(hmCoverage))
-                        success = 1
-        else:
+        if checkHM(potentialMember) == 1:
             success = 1
     party.append(potentialMember)
     # test code start
@@ -101,48 +118,129 @@ for i in range(5):
     # test code end
     availablePokemonList.remove(potentialMember)
 
-# party sorting algorithm
-slot1 = 0
-slot2 = 0
-slot3 = 0
-slot4 = 0
-slot5 = 0
-slot6 = 0
-counter = 0
-for i in range(6):
-    for j in range(6):
-        if party[i].number < party[j].number:
-            counter += 1
-    if counter == 5:
-        slot1 = i
-    elif counter == 4:
-        slot2 = i
-    elif counter == 3:
-        slot3 = i
-    elif counter == 2:
-        slot4 = i
-    elif counter == 1:
-        slot5 = i
-    else:
-        slot6 = i
-    counter = 0
-sortedParty = []
-sortedParty.append(party[slot1])
-sortedParty.append(party[slot2])
-sortedParty.append(party[slot3])
-sortedParty.append(party[slot4])
-sortedParty.append(party[slot5])
-sortedParty.append(party[slot6])
-party = sortedParty
 
-# display the selected party Pokemon, along with the HMs each is able to cover
-for i in range(6):
-    print(party[i].name + " - ", end="")
-    if len(party[i].HMs) == 0:
-        print("None")
-    elif len(party[i].HMs) == 1:
-        print(party[i].HMs[0].name)
-    elif len(party[i].HMs) == 2:
-        print(party[i].HMs[0].name + ", " + party[i].HMs[1].name)
-    elif len(party[i].HMs) == 3:
-        print(party[i].HMs[0].name + ", " + party[i].HMs[1].name + ", " + party[i].HMs[2].name)
+# function for selecting the third Pokemon
+def select3():
+    global party
+    global availablePokemonList
+    success = 0
+    while success == 0:
+        potentialMember = random.choice(availablePokemonList)
+        if checkHM(potentialMember) == 1:
+            success = 1
+    party.append(potentialMember)
+    # test code start
+    #print("TEST: Successfully added member: " + potentialMember.name)
+    # test code end
+    availablePokemonList.remove(potentialMember)
+
+
+# function for selecting the fourth Pokemon
+def select4():
+    global party
+    global availablePokemonList
+    success = 0
+    while success == 0:
+        potentialMember = random.choice(availablePokemonList)
+        if checkHM(potentialMember) == 1:
+            success = 1
+    party.append(potentialMember)
+    # test code start
+    #print("TEST: Successfully added member: " + potentialMember.name)
+    # test code end
+    availablePokemonList.remove(potentialMember)
+
+
+# function for selecting the fifth Pokemon
+def select5():
+    global party
+    global availablePokemonList
+    success = 0
+    while success == 0:
+        potentialMember = random.choice(availablePokemonList)
+        if checkHM(potentialMember) == 1:
+            success = 1
+    party.append(potentialMember)
+    # test code start
+    #print("TEST: Successfully added member: " + potentialMember.name)
+    # test code end
+    availablePokemonList.remove(potentialMember)
+
+
+# function for selecting the sixth Pokemon
+def select6():
+    global party
+    global availablePokemonList
+    success = 0
+    while success == 0:
+        potentialMember = random.choice(availablePokemonList)
+        if checkHM(potentialMember) == 1:
+            success = 1
+    party.append(potentialMember)
+    # test code start
+    #print("TEST: Successfully added member: " + potentialMember.name)
+    # test code end
+    availablePokemonList.remove(potentialMember)
+
+
+# function for sorting the party
+def sortParty():
+    global party
+    slot1 = 0
+    slot2 = 0
+    slot3 = 0
+    slot4 = 0
+    slot5 = 0
+    slot6 = 0
+    counter = 0
+    for i in range(6):
+        for j in range(6):
+            if party[i].number < party[j].number:
+                counter += 1
+        if counter == 5:
+            slot1 = i
+        elif counter == 4:
+            slot2 = i
+        elif counter == 3:
+            slot3 = i
+        elif counter == 2:
+            slot4 = i
+        elif counter == 1:
+            slot5 = i
+        else:
+            slot6 = i
+        counter = 0
+    sortedParty = []
+    sortedParty.append(party[slot1])
+    sortedParty.append(party[slot2])
+    sortedParty.append(party[slot3])
+    sortedParty.append(party[slot4])
+    sortedParty.append(party[slot5])
+    sortedParty.append(party[slot6])
+    party = sortedParty
+    return party
+
+
+# function for displaying the party
+def displayParty():
+    global party
+    for i in range(6):
+        print(party[i].name + " - ", end="")
+        if len(party[i].HMs) == 0:
+            print("None")
+        elif len(party[i].HMs) == 1:
+            print(party[i].HMs[0].name)
+        elif len(party[i].HMs) == 2:
+            print(party[i].HMs[0].name + ", " + party[i].HMs[1].name)
+        elif len(party[i].HMs) == 3:
+            print(party[i].HMs[0].name + ", " + party[i].HMs[1].name + ", " + party[i].HMs[2].name)
+
+
+selectStarter()
+select2()
+select3()
+select4()
+select5()
+select6()
+sortParty()
+displayParty()
