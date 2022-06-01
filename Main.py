@@ -102,85 +102,138 @@ def selectStarter():
     # mark appropriate HMs as covered by the starter
     hmList.remove(random.choice(chosenStarter.HMs))
 
+    secondSlotCandidates = list(availablePokemonList)
+    if select2(secondSlotCandidates) == 1:
+        return 1
+    else:
+        print("No valid team could be found with the given starter: " + chosenStarter.name)
+
 
 # function for selecting the second Pokemon
-def select2():
+def select2(pokemonPool):
     global party
-    global availablePokemonList
-    success = 0
-    while success == 0:
-        potentialMember = random.choice(availablePokemonList)
-        if checkHM(potentialMember) == 1:
-            success = 1
-    party.append(potentialMember)
-    # test code start
-    #print("TEST: Successfully added member: " + potentialMember.name)
-    # test code end
-    availablePokemonList.remove(potentialMember)
+    success1 = 0
+    while success1 == 0:
+        success2 = 0
+        while success2 == 0:
+            if pokemonPool == 0:
+                return 0
+            potentialMember = random.choice(pokemonPool)
+            if checkHM(potentialMember) == 1:
+                success2 = 1
+            else:
+                pokemonPool.remove(potentialMember)
+        party.append(potentialMember)
+        # test code start
+        #print("TEST: Successfully added member: " + potentialMember.name)
+        # test code end
+        pokemonPool.remove(potentialMember)
+        thirdSlotCandidates = list(pokemonPool)
+        if select3(thirdSlotCandidates) == 1:
+            success1 = 1
+        else:
+            party.remove(potentialMember)
+    return 1
 
 
 # function for selecting the third Pokemon
-def select3():
+def select3(pokemonPool):
     global party
-    global availablePokemonList
-    success = 0
-    while success == 0:
-        potentialMember = random.choice(availablePokemonList)
-        if checkHM(potentialMember) == 1:
-            success = 1
-    party.append(potentialMember)
-    # test code start
-    #print("TEST: Successfully added member: " + potentialMember.name)
-    # test code end
-    availablePokemonList.remove(potentialMember)
+    success1 = 0
+    while success1 == 0:
+        success2 = 0
+        while success2 == 0:
+            if pokemonPool == 0:
+                return 0
+            potentialMember = random.choice(pokemonPool)
+            if checkHM(potentialMember) == 1:
+                success2 = 1
+            else:
+                pokemonPool.remove(potentialMember)
+        party.append(potentialMember)
+        # test code start
+        #print("TEST: Successfully added member: " + potentialMember.name)
+        # test code end
+        pokemonPool.remove(potentialMember)
+        fourthSlotCandidates = list(pokemonPool)
+        if select4(fourthSlotCandidates) == 1:
+            success1 = 1
+        else:
+            party.remove(potentialMember)
+    return 1
 
 
 # function for selecting the fourth Pokemon
-def select4():
+def select4(pokemonPool):
     global party
-    global availablePokemonList
-    success = 0
-    while success == 0:
-        potentialMember = random.choice(availablePokemonList)
-        if checkHM(potentialMember) == 1:
-            success = 1
-    party.append(potentialMember)
-    # test code start
-    #print("TEST: Successfully added member: " + potentialMember.name)
-    # test code end
-    availablePokemonList.remove(potentialMember)
+    success1 = 0
+    while success1 == 0:
+        success2 = 0
+        while success2 == 0:
+            if pokemonPool == 0:
+                return 0
+            potentialMember = random.choice(pokemonPool)
+            if checkHM(potentialMember) == 1:
+                success2 = 1
+            else:
+                pokemonPool.remove(potentialMember)
+        party.append(potentialMember)
+        # test code start
+        #print("TEST: Successfully added member: " + potentialMember.name)
+        # test code end
+        pokemonPool.remove(potentialMember)
+        fifthSlotCandidates = list(pokemonPool)
+        if select5(fifthSlotCandidates) == 1:
+            success1 = 1
+        else:
+            party.remove(potentialMember)
+    return 1
 
 
 # function for selecting the fifth Pokemon
-def select5():
+def select5(pokemonPool):
     global party
-    global availablePokemonList
-    success = 0
-    while success == 0:
-        potentialMember = random.choice(availablePokemonList)
-        if checkHM(potentialMember) == 1:
-            success = 1
-    party.append(potentialMember)
-    # test code start
-    #print("TEST: Successfully added member: " + potentialMember.name)
-    # test code end
-    availablePokemonList.remove(potentialMember)
+    success1 = 0
+    while success1 == 0:
+        success2 = 0
+        while success2 == 0:
+            if pokemonPool == 0:
+                return 0
+            potentialMember = random.choice(pokemonPool)
+            if checkHM(potentialMember) == 1:
+                success2 = 1
+            else:
+                pokemonPool.remove(potentialMember)
+        party.append(potentialMember)
+        # test code start
+        #print("TEST: Successfully added member: " + potentialMember.name)
+        # test code end
+        pokemonPool.remove(potentialMember)
+        sixthSlotCandidates = list(pokemonPool)
+        if select6(sixthSlotCandidates) == 1:
+            success1 = 1
+        else:
+            party.remove(potentialMember)
+    return 1
 
 
 # function for selecting the sixth Pokemon
-def select6():
+def select6(pokemonPool):
     global party
-    global availablePokemonList
     success = 0
     while success == 0:
-        potentialMember = random.choice(availablePokemonList)
+        if pokemonPool == 0:
+            return 0
+        potentialMember = random.choice(pokemonPool)
         if checkHM(potentialMember) == 1:
             success = 1
+        else:
+            pokemonPool.remove(potentialMember)
     party.append(potentialMember)
     # test code start
     #print("TEST: Successfully added member: " + potentialMember.name)
     # test code end
-    availablePokemonList.remove(potentialMember)
+    return 1
 
 
 # function for sorting the party
@@ -236,11 +289,6 @@ def displayParty():
             print(party[i].HMs[0].name + ", " + party[i].HMs[1].name + ", " + party[i].HMs[2].name)
 
 
-selectStarter()
-select2()
-select3()
-select4()
-select5()
-select6()
-sortParty()
-displayParty()
+if selectStarter() == 1:
+    sortParty()
+    displayParty()
