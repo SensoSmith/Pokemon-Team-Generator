@@ -15,25 +15,47 @@ Arbok = pokemon("Arbok", 24)
 Raichu = pokemon("Raichu", 26)
 Sandslash = pokemon("Sandslash", 28)
 Nidoqueen = pokemon("Nidoqueen", 31)
+Nidoking = pokemon("Nidoking", 34)
 Clefable = pokemon("Clefable", 36)
+Wigglytuff = pokemon("Wigglytuff", 40)
+Vileplume = pokemon("Vileplume", 45)
 Dugtrio = pokemon("Dugtrio", 51)
 Alakazam = pokemon("Alakazam", 65)
 Machamp = pokemon("Machamp", 68)
 Golem = pokemon("Golem", 76)
+Slowbro = pokemon("Slowbro", 80)
+Farfetchd = pokemon("Farfetch'd", 83)
 Dewgong = pokemon("Dewgong", 87)
 Gengar = pokemon("Gengar", 94)
 Pinsir = pokemon("Pinsir", 127)
 Snorlax = pokemon("Snorlax", 143)
 Dragonite = pokemon("Dragonite", 149)
 
-pokemonList = [Venusaur, Charizard, Blastoise, Beedrill, Pidgeot, Fearow, Arbok, Raichu,
-               Sandslash, Nidoqueen, Clefable, Dugtrio, Alakazam, Machamp, Golem, Dewgong,
-               Gengar, Pinsir, Snorlax, Dragonite]
+totalPokemonList = [Venusaur, Charizard, Blastoise, Beedrill, Pidgeot, Fearow, Arbok, Raichu,
+               Sandslash, Nidoqueen, Nidoking, Clefable, Wigglytuff, Vileplume, Dugtrio, Alakazam,
+               Machamp, Golem, Slowbro, Farfetchd, Dewgong, Gengar, Pinsir, Snorlax,
+               Dragonite]
+
+availablePokemonList = totalPokemonList
+
+starters = [Venusaur, Charizard, Blastoise]
 
 party = []
 
-for i in range(6):
-    party.append(random.choice(pokemonList))
+# randomly select starter
+chosenStarter = random.choice(starters)
+party.append(chosenStarter)
+
+# remove other starters from available Pokemon list
+starters.remove(chosenStarter)
+for i in range(2):
+    availablePokemonList.remove(starters[i])
+
+# randomly select five other party members
+for i in range(5):
+    potentialMember = random.choice(availablePokemonList)
+    party.append(potentialMember)
+    availablePokemonList.remove(potentialMember)
 
 # party sorting algorithm
 slot1 = 0
