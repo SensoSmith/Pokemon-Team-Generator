@@ -37,11 +37,11 @@ class pokemon:
         self.types = types
         self.HMs = HMs
 
-Venusaur = pokemon("Venusaur", 3, [Poison, Grass], [cut])
+Venusaur = pokemon("Venusaur", 3, [Grass, Poison], [cut])
 Charizard = pokemon("Charizard", 6, [Fire, Flying], [cut, strength])
 Blastoise = pokemon("Blastoise", 9, [Water], [surf, strength])
 Butterfree = pokemon("Butterfree", 12, [Bug, Flying], [])
-Beedrill = pokemon("Beedrill", 15, [Poison, Bug], [cut])
+Beedrill = pokemon("Beedrill", 15, [Bug, Poison], [cut])
 Pidgeot = pokemon("Pidgeot", 18, [Normal, Flying], [fly])
 Raticate = pokemon("Raticate", 20, [Normal], [])
 Fearow = pokemon("Fearow", 22, [Normal, Flying], [fly])
@@ -56,39 +56,56 @@ Wigglytuff = pokemon("Wigglytuff", 40, [Normal], [strength, flash])
 Golbat = pokemon("Golbat", 42, [Poison, Flying], [])
 Vileplume = pokemon("Vileplume", 45, [Poison, Grass], [cut])
 Parasect = pokemon("Parasect", 47, [Bug, Grass], [cut])
-Venomoth = pokemon("Venomoth", 49, [Poison, Bug], [])
+Venomoth = pokemon("Venomoth", 49, [Bug, Poison], [])
 Dugtrio = pokemon("Dugtrio", 51, [Ground], [])
 Persian = pokemon("Persian", 53, [Normal], [])
 Golduck = pokemon("Golduck", 55, [Water], [surf, strength])
 Primeape = pokemon("Primeape", 57, [Fighting], [strength])
 Arcanine = pokemon("Arcanine", 59, [Fire], [])
+Poliwrath = pokemon("Poliwrath", 62, [Water, Fighting], [surf, strength])
 Alakazam = pokemon("Alakazam", 65, [Psychic], [flash])
 Machamp = pokemon("Machamp", 68, [Fighting], [strength])
+Victreebel = pokemon("Victreebel", 71, [Grass, Poison], [cut])
+Tentacruel = pokemon("Tentacruel", 73, [Water, Poison], [cut, surf])
 Golem = pokemon("Golem", 76, [Rock, Ground], [strength])
+Rapidash = pokemon("Rapidash", 78, [Fire], [])
 Slowbro = pokemon("Slowbro", 80, [Water, Psychic], [surf, strength, flash])
+Magneton = pokemon("Magneton", 82, [Electric], [flash])
 Farfetchd = pokemon("Farfetch'd", 83, [Normal, Flying], [cut, fly])
 Dodrio = pokemon("Dodrio", 85, [Normal, Flying], [fly])
 Dewgong = pokemon("Dewgong", 87, [Water, Ice], [surf, strength])
-Gengar = pokemon("Gengar", 94, [Poison, Ghost], [strength])
+Muk = pokemon("Muk", 89, [Poison], [])
+Cloyster = pokemon("Cloyster", 91, [Water, Ice], [surf])
+Gengar = pokemon("Gengar", 94, [Ghost, Poison], [strength])
+Onix = pokemon("Onix", 95, [Rock, Ground], [strength])
+Hypno = pokemon("Hypno", 97, [Psychic], [flash])
+Kingler = pokemon("Kingler", 99, [Water], [cut, surf, strength])
+Electrode = pokemon("Electrode", 101, [Electric], [flash])
+Exeggutor = pokemon("Exeggutor", 103, [Grass, Psychic], [strength])
+Marowak = pokemon("Marowak", 105, [Ground], [strength])
 Hitmonlee = pokemon("Hitmonlee", 106, [Fighting], [strength])
 Hitmonchan = pokemon("Hitmonchan", 107, [Fighting], [strength])
+Lickitung = pokemon("Lickitung", 108, [Normal], [cut, surf, strength])
+Weezing = pokemon("Weezing", 110, [Poison], [])
 MrMime = pokemon("Mr. Mime", 122, [Psychic], [flash])
-Jynx = pokemon("Jynx", 124, [Psychic, Ice], [])
+Jynx = pokemon("Jynx", 124, [Ice, Psychic], [])
 Pinsir = pokemon("Pinsir", 127, [Bug], [cut, strength])
 Vaporeon = pokemon("Vaporeon", 134, [Water], [surf])
 Jolteon = pokemon("Jolteon", 135, [Electric], [flash])
 Flareon = pokemon("Flareon", 136, [Fire], [])
-Omastar = pokemon("Omastar", 139, [Water, Rock], [surf])
-Kabutops = pokemon("Kabutops", 141, [Water, Rock], [surf])
+Omastar = pokemon("Omastar", 139, [Rock, Water], [surf])
+Kabutops = pokemon("Kabutops", 141, [Rock, Water], [surf])
 Snorlax = pokemon("Snorlax", 143, [Normal], [surf, strength])
-Dragonite = pokemon("Dragonite", 149, [Flying, Dragon], [surf, strength])
+Dragonite = pokemon("Dragonite", 149, [Dragon, Flying], [surf, strength])
 
 totalPokemonList = [Venusaur, Charizard, Blastoise, Butterfree, Beedrill, Pidgeot, Raticate, Fearow,
                     Arbok, Raichu, Sandslash, Nidoqueen, Nidoking, Clefable, Ninetales, Wigglytuff,
                     Golbat, Vileplume, Parasect, Venomoth, Dugtrio, Persian, Golduck, Primeape,
-                    Arcanine, Alakazam, Machamp, Golem, Slowbro, Farfetchd, Dodrio, Dewgong,
-                    Gengar, Hitmonlee, Hitmonchan, MrMime, Jynx, Pinsir, Vaporeon, Jolteon,
-                    Flareon, Omastar, Kabutops, Snorlax, Dragonite]
+                    Arcanine, Poliwrath, Alakazam, Machamp, Victreebel, Tentacruel, Golem, Rapidash,
+                    Slowbro, Magneton, Farfetchd, Dodrio, Dewgong, Muk, Cloyster, Gengar,
+                    Onix, Hypno, Kingler, Electrode, Exeggutor, Marowak, Hitmonlee, Hitmonchan,
+                    Lickitung, Weezing, MrMime, Jynx, Pinsir, Vaporeon, Jolteon, Flareon,
+                    Omastar, Kabutops, Snorlax, Dragonite]
 
 availablePokemonList = list(totalPokemonList)
 
@@ -97,6 +114,20 @@ starters = [Venusaur, Charizard, Blastoise]
 party = []
 
 hmList = [cut, fly, surf, strength, flash]
+
+
+# function for preventing adding Pokemon of the same type as previously selected Pokemon
+def checkSameType(candidate):
+    global party
+    partyTypes = []
+    for i in party:
+        for j in i.types:
+            if partyTypes.count(j) == 0:
+                partyTypes.append(j)
+    for i in candidate.types:
+        if partyTypes.count(i) > 0:
+            return 0
+    return 1
 
 
 # function for verifying HM coverage
@@ -144,20 +175,6 @@ def checkMutuallyExclusive(candidate):
             if group3.count(i) > 0:
                 return 0
     return 1
-
-
-def checkSameType(candidate):
-    global party
-    partyTypes = []
-    for i in party:
-        for j in i.types:
-            if partyTypes.count(j) == 0:
-                partyTypes.append(j)
-    for i in candidate.types:
-        if partyTypes.count(i) > 0:
-            return 0
-    return 1
-
 
 
 # function for selecting starter Pokemon
