@@ -1,14 +1,28 @@
 import random
 
-class HM:
+class type:
     def __init__(self, name):
         self.name = name
 
-class pokemon:
-    def __init__(self, name, number, HMs):
+Normal = type("Normal")
+Fire = type("Fire")
+Water = type("Water")
+Electric = type("Electric")
+Poison = type("Poison")
+Bug = type("Bug")
+Grass = type("Grass")
+Fighting = type("Fighting")
+Rock = type("Rock")
+Ground = type("Ground")
+Flying = type("Flying")
+Psychic = type("Psychic")
+Ice = type("Ice")
+Ghost = type("Ice")
+Dragon = type("Dragon")
+
+class HM:
+    def __init__(self, name):
         self.name = name
-        self.number = number
-        self.HMs = HMs
 
 cut = HM("Cut")
 fly = HM("Fly")
@@ -16,52 +30,65 @@ surf = HM("Surf")
 strength = HM("Strength")
 flash = HM("Flash")
 
-Venusaur = pokemon("Venusaur", 3, [cut])
-Charizard = pokemon("Charizard", 6, [cut, strength])
-Blastoise = pokemon("Blastoise", 9, [surf, strength])
-Butterfree = pokemon("Butterfree", 12, [])
-Beedrill = pokemon("Beedrill", 15, [cut])
-Pidgeot = pokemon("Pidgeot", 18, [fly])
-Raticate = pokemon("Raticate", 20, [])
-Fearow = pokemon("Fearow", 22, [fly])
-Arbok = pokemon("Arbok", 24, [strength])
-Raichu = pokemon("Raichu", 26, [flash])
-Sandslash = pokemon("Sandslash", 28, [cut, strength])
-Nidoqueen = pokemon("Nidoqueen", 31, [surf, strength])
-Nidoking = pokemon("Nidoking", 34, [surf, strength])
-Clefable = pokemon("Clefable", 36, [strength, flash])
-Ninetales = pokemon("Ninetales", 38, [])
-Wigglytuff = pokemon("Wigglytuff", 40, [strength, flash])
-Golbat = pokemon("Golbat", 42, [])
-Vileplume = pokemon("Vileplume", 45, [cut])
-Parasect = pokemon("Parasect", 47, [cut])
-Dugtrio = pokemon("Dugtrio", 51, [])
-Alakazam = pokemon("Alakazam", 65, [flash])
-Machamp = pokemon("Machamp", 68, [strength])
-Golem = pokemon("Golem", 76, [strength])
-Slowbro = pokemon("Slowbro", 80, [surf, strength, flash])
-Farfetchd = pokemon("Farfetch'd", 83, [cut, fly])
-Dodrio = pokemon("Dodrio", 85, [fly])
-Dewgong = pokemon("Dewgong", 87, [surf, strength])
-Gengar = pokemon("Gengar", 94, [strength])
-Hitmonlee = pokemon("Hitmonlee", 106, [strength])
-Hitmonchan = pokemon("Hitmonchan", 107, [strength])
-MrMime = pokemon("Mr. Mime", 122, [flash])
-Jynx = pokemon("Jynx", 124, [])
-Pinsir = pokemon("Pinsir", 127, [cut, strength])
-Vaporeon = pokemon("Vaporeon", 134, [surf])
-Jolteon = pokemon("Jolteon", 135, [flash])
-Flareon = pokemon("Flareon", 136, [])
-Omastar = pokemon("Omastar", 139, [surf])
-Kabutops = pokemon("Kabutops", 141, [surf])
-Snorlax = pokemon("Snorlax", 143, [surf, strength])
-Dragonite = pokemon("Dragonite", 149, [surf, strength])
+class pokemon:
+    def __init__(self, name, number, types, HMs):
+        self.name = name
+        self.number = number
+        self.types = types
+        self.HMs = HMs
+
+Venusaur = pokemon("Venusaur", 3, [Poison, Grass], [cut])
+Charizard = pokemon("Charizard", 6, [Fire, Flying], [cut, strength])
+Blastoise = pokemon("Blastoise", 9, [Water], [surf, strength])
+Butterfree = pokemon("Butterfree", 12, [Bug, Flying], [])
+Beedrill = pokemon("Beedrill", 15, [Poison, Bug], [cut])
+Pidgeot = pokemon("Pidgeot", 18, [Normal, Flying], [fly])
+Raticate = pokemon("Raticate", 20, [Normal], [])
+Fearow = pokemon("Fearow", 22, [Normal, Flying], [fly])
+Arbok = pokemon("Arbok", 24, [Poison], [strength])
+Raichu = pokemon("Raichu", 26, [Electric], [flash])
+Sandslash = pokemon("Sandslash", 28, [Ground], [cut, strength])
+Nidoqueen = pokemon("Nidoqueen", 31, [Poison, Ground], [surf, strength])
+Nidoking = pokemon("Nidoking", 34, [Poison, Ground], [surf, strength])
+Clefable = pokemon("Clefable", 36, [Normal], [strength, flash])
+Ninetales = pokemon("Ninetales", 38, [Fire], [])
+Wigglytuff = pokemon("Wigglytuff", 40, [Normal], [strength, flash])
+Golbat = pokemon("Golbat", 42, [Poison, Flying], [])
+Vileplume = pokemon("Vileplume", 45, [Poison, Grass], [cut])
+Parasect = pokemon("Parasect", 47, [Bug, Grass], [cut])
+Venomoth = pokemon("Venomoth", 49, [Poison, Bug], [])
+Dugtrio = pokemon("Dugtrio", 51, [Ground], [])
+Persian = pokemon("Persian", 53, [Normal], [])
+Golduck = pokemon("Golduck", 55, [Water], [surf, strength])
+Primeape = pokemon("Primeape", 57, [Fighting], [strength])
+Arcanine = pokemon("Arcanine", 59, [Fire], [])
+Alakazam = pokemon("Alakazam", 65, [Psychic], [flash])
+Machamp = pokemon("Machamp", 68, [Fighting], [strength])
+Golem = pokemon("Golem", 76, [Rock, Ground], [strength])
+Slowbro = pokemon("Slowbro", 80, [Water, Psychic], [surf, strength, flash])
+Farfetchd = pokemon("Farfetch'd", 83, [Normal, Flying], [cut, fly])
+Dodrio = pokemon("Dodrio", 85, [Normal, Flying], [fly])
+Dewgong = pokemon("Dewgong", 87, [Water, Ice], [surf, strength])
+Gengar = pokemon("Gengar", 94, [Poison, Ghost], [strength])
+Hitmonlee = pokemon("Hitmonlee", 106, [Fighting], [strength])
+Hitmonchan = pokemon("Hitmonchan", 107, [Fighting], [strength])
+MrMime = pokemon("Mr. Mime", 122, [Psychic], [flash])
+Jynx = pokemon("Jynx", 124, [Psychic, Ice], [])
+Pinsir = pokemon("Pinsir", 127, [Bug], [cut, strength])
+Vaporeon = pokemon("Vaporeon", 134, [Water], [surf])
+Jolteon = pokemon("Jolteon", 135, [Electric], [flash])
+Flareon = pokemon("Flareon", 136, [Fire], [])
+Omastar = pokemon("Omastar", 139, [Water, Rock], [surf])
+Kabutops = pokemon("Kabutops", 141, [Water, Rock], [surf])
+Snorlax = pokemon("Snorlax", 143, [Normal], [surf, strength])
+Dragonite = pokemon("Dragonite", 149, [Flying, Dragon], [surf, strength])
 
 totalPokemonList = [Venusaur, Charizard, Blastoise, Butterfree, Beedrill, Pidgeot, Raticate, Fearow,
                     Arbok, Raichu, Sandslash, Nidoqueen, Nidoking, Clefable, Ninetales, Wigglytuff,
-                    Golbat, Vileplume, Parasect, Dugtrio, Alakazam, Machamp, Golem, Slowbro,
-                    Farfetchd, Dodrio, Dewgong, Gengar, Hitmonlee, Hitmonchan, MrMime, Jynx,
-                    Pinsir, Vaporeon, Jolteon, Flareon, Omastar, Kabutops, Snorlax, Dragonite]
+                    Golbat, Vileplume, Parasect, Venomoth, Dugtrio, Persian, Golduck, Primeape,
+                    Arcanine, Alakazam, Machamp, Golem, Slowbro, Farfetchd, Dodrio, Dewgong,
+                    Gengar, Hitmonlee, Hitmonchan, MrMime, Jynx, Pinsir, Vaporeon, Jolteon,
+                    Flareon, Omastar, Kabutops, Snorlax, Dragonite]
 
 availablePokemonList = list(totalPokemonList)
 
@@ -119,6 +146,20 @@ def checkMutuallyExclusive(candidate):
     return 1
 
 
+def checkSameType(candidate):
+    global party
+    partyTypes = []
+    for i in party:
+        for j in i.types:
+            if partyTypes.count(j) == 0:
+                partyTypes.append(j)
+    for i in candidate.types:
+        if partyTypes.count(i) > 0:
+            return 0
+    return 1
+
+
+
 # function for selecting starter Pokemon
 def selectStarter():
     global party
@@ -148,12 +189,17 @@ def select2(pokemonPool):
     while success1 == 0:
         success2 = 0
         while success2 == 0:
-            if pokemonPool == 0:
+            if len(pokemonPool) == 0:
                 return 0
             potentialMember = random.choice(pokemonPool)
-            if checkHM(potentialMember) == 1:
-                if checkMutuallyExclusive(potentialMember) == 1:
-                    success2 = 1
+            if checkSameType(potentialMember) == 1:
+                if checkHM(potentialMember) == 1:
+                    if checkMutuallyExclusive(potentialMember) == 1:
+                        success2 = 1
+                    else:
+                        pokemonPool.remove(potentialMember)
+                else:
+                    pokemonPool.remove(potentialMember)
             else:
                 pokemonPool.remove(potentialMember)
         party.append(potentialMember)
@@ -176,12 +222,17 @@ def select3(pokemonPool):
     while success1 == 0:
         success2 = 0
         while success2 == 0:
-            if pokemonPool == 0:
+            if len(pokemonPool) == 0:
                 return 0
             potentialMember = random.choice(pokemonPool)
-            if checkHM(potentialMember) == 1:
-                if checkMutuallyExclusive(potentialMember) == 1:
-                    success2 = 1
+            if checkSameType(potentialMember) == 1:
+                if checkHM(potentialMember) == 1:
+                    if checkMutuallyExclusive(potentialMember) == 1:
+                        success2 = 1
+                    else:
+                        pokemonPool.remove(potentialMember)
+                else:
+                    pokemonPool.remove(potentialMember)
             else:
                 pokemonPool.remove(potentialMember)
         party.append(potentialMember)
@@ -204,12 +255,17 @@ def select4(pokemonPool):
     while success1 == 0:
         success2 = 0
         while success2 == 0:
-            if pokemonPool == 0:
+            if len(pokemonPool) == 0:
                 return 0
             potentialMember = random.choice(pokemonPool)
-            if checkHM(potentialMember) == 1:
-                if checkMutuallyExclusive(potentialMember) == 1:
-                    success2 = 1
+            if checkSameType(potentialMember) == 1:
+                if checkHM(potentialMember) == 1:
+                    if checkMutuallyExclusive(potentialMember) == 1:
+                        success2 = 1
+                    else:
+                        pokemonPool.remove(potentialMember)
+                else:
+                    pokemonPool.remove(potentialMember)
             else:
                 pokemonPool.remove(potentialMember)
         party.append(potentialMember)
@@ -232,12 +288,17 @@ def select5(pokemonPool):
     while success1 == 0:
         success2 = 0
         while success2 == 0:
-            if pokemonPool == 0:
+            if len(pokemonPool) == 0:
                 return 0
             potentialMember = random.choice(pokemonPool)
-            if checkHM(potentialMember) == 1:
-                if checkMutuallyExclusive(potentialMember) == 1:
-                    success2 = 1
+            if checkSameType(potentialMember) == 1:
+                if checkHM(potentialMember) == 1:
+                    if checkMutuallyExclusive(potentialMember) == 1:
+                        success2 = 1
+                    else:
+                        pokemonPool.remove(potentialMember)
+                else:
+                    pokemonPool.remove(potentialMember)
             else:
                 pokemonPool.remove(potentialMember)
         party.append(potentialMember)
@@ -258,12 +319,17 @@ def select6(pokemonPool):
     global party
     success = 0
     while success == 0:
-        if pokemonPool == 0:
+        if len(pokemonPool) == 0:
             return 0
         potentialMember = random.choice(pokemonPool)
-        if checkHM(potentialMember) == 1:
-            if checkMutuallyExclusive(potentialMember) == 1:
-                success = 1
+        if checkSameType(potentialMember) == 1:
+            if checkHM(potentialMember) == 1:
+                if checkMutuallyExclusive(potentialMember) == 1:
+                    success = 1
+                else:
+                    pokemonPool.remove(potentialMember)
+            else:
+                pokemonPool.remove(potentialMember)
         else:
             pokemonPool.remove(potentialMember)
     party.append(potentialMember)
