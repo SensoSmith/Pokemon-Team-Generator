@@ -17,7 +17,7 @@ Ground = type("Ground")
 Flying = type("Flying")
 Psychic = type("Psychic")
 Ice = type("Ice")
-Ghost = type("Ice")
+Ghost = type("Ghost")
 Dragon = type("Dragon")
 
 class HM:
@@ -114,6 +114,11 @@ starters = [Venusaur, Charizard, Blastoise]
 party = []
 
 hmList = [cut, fly, surf, strength, flash]
+firstHM = 0
+secondHM = 0
+thirdHM = 0
+fourthHM = 0
+fifthHM = 0
 
 
 # function for preventing adding Pokemon of the same type as previously selected Pokemon
@@ -131,22 +136,35 @@ def checkSameType(candidate):
 
 
 # function for verifying HM coverage
-def checkHM(candidate):
+def checkHM(candidate, slotNum):
     global party
     global hmList
+    global secondHM
+    global thirdHM
+    global fourthHM
+    global fifthHM
     counter = 0
     if len(hmList) > 0:
         if len(candidate.HMs) > 0:
             for i in candidate.HMs:
-                if hmList.count(i) > 0:
+                if i in hmList:
                     counter += 1
             if counter > 0:
                 hmCoverage = list(candidate.HMs)
                 for i in candidate.HMs:
-                    if hmList.count(i) == 0:
+                    if i not in hmList:
                         hmCoverage.remove(i)
                 if len(hmCoverage) > 0:
-                    hmList.remove(random.choice(hmCoverage))
+                    removeHM = random.choice(hmCoverage)
+                    hmList.remove(removeHM)
+                    if slotNum == 2:
+                        secondHM = removeHM
+                    elif slotNum == 3:
+                        thirdHM = removeHM
+                    elif slotNum == 4:
+                        fourthHM = removeHM
+                    elif slotNum == 5:
+                        fifthHM = removeHM
                     return 1
             else:
                 return 0
@@ -181,6 +199,7 @@ def checkMutuallyExclusive(candidate):
 def selectStarter():
     global party
     global availablePokemonList
+    global hmList
     chosenStarter = random.choice(starters)
     party.append(chosenStarter)
     # test code start
@@ -202,6 +221,11 @@ def selectStarter():
 # function for selecting the second Pokemon
 def select2(pokemonPool):
     global party
+    global hmList
+    global secondHM
+    global thirdHM
+    global fourthHM
+    global fifthHM
     success1 = 0
     while success1 == 0:
         success2 = 0
@@ -210,7 +234,7 @@ def select2(pokemonPool):
                 return 0
             potentialMember = random.choice(pokemonPool)
             if checkSameType(potentialMember) == 1:
-                if checkHM(potentialMember) == 1:
+                if checkHM(potentialMember, 2) == 1:
                     if checkMutuallyExclusive(potentialMember) == 1:
                         success2 = 1
                     else:
@@ -229,12 +253,18 @@ def select2(pokemonPool):
             success1 = 1
         else:
             party.remove(potentialMember)
+            hmList.append(secondHM)
     return 1
 
 
 # function for selecting the third Pokemon
 def select3(pokemonPool):
     global party
+    global hmList
+    global secondHM
+    global thirdHM
+    global fourthHM
+    global fifthHM
     success1 = 0
     while success1 == 0:
         success2 = 0
@@ -243,7 +273,7 @@ def select3(pokemonPool):
                 return 0
             potentialMember = random.choice(pokemonPool)
             if checkSameType(potentialMember) == 1:
-                if checkHM(potentialMember) == 1:
+                if checkHM(potentialMember, 3) == 1:
                     if checkMutuallyExclusive(potentialMember) == 1:
                         success2 = 1
                     else:
@@ -262,12 +292,18 @@ def select3(pokemonPool):
             success1 = 1
         else:
             party.remove(potentialMember)
+            hmList.append(thirdHM)
     return 1
 
 
 # function for selecting the fourth Pokemon
 def select4(pokemonPool):
     global party
+    global hmList
+    global secondHM
+    global thirdHM
+    global fourthHM
+    global fifthHM
     success1 = 0
     while success1 == 0:
         success2 = 0
@@ -276,7 +312,7 @@ def select4(pokemonPool):
                 return 0
             potentialMember = random.choice(pokemonPool)
             if checkSameType(potentialMember) == 1:
-                if checkHM(potentialMember) == 1:
+                if checkHM(potentialMember, 4) == 1:
                     if checkMutuallyExclusive(potentialMember) == 1:
                         success2 = 1
                     else:
@@ -295,12 +331,18 @@ def select4(pokemonPool):
             success1 = 1
         else:
             party.remove(potentialMember)
+            hmList.append(fourthHM)
     return 1
 
 
 # function for selecting the fifth Pokemon
 def select5(pokemonPool):
     global party
+    global hmList
+    global secondHM
+    global thirdHM
+    global fourthHM
+    global fifthHM
     success1 = 0
     while success1 == 0:
         success2 = 0
@@ -309,7 +351,7 @@ def select5(pokemonPool):
                 return 0
             potentialMember = random.choice(pokemonPool)
             if checkSameType(potentialMember) == 1:
-                if checkHM(potentialMember) == 1:
+                if checkHM(potentialMember, 5) == 1:
                     if checkMutuallyExclusive(potentialMember) == 1:
                         success2 = 1
                     else:
@@ -328,6 +370,7 @@ def select5(pokemonPool):
             success1 = 1
         else:
             party.remove(potentialMember)
+            hmList.append(fifthHM)
     return 1
 
 
@@ -340,7 +383,7 @@ def select6(pokemonPool):
             return 0
         potentialMember = random.choice(pokemonPool)
         if checkSameType(potentialMember) == 1:
-            if checkHM(potentialMember) == 1:
+            if checkHM(potentialMember, 6) == 1:
                 if checkMutuallyExclusive(potentialMember) == 1:
                     success = 1
                 else:

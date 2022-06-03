@@ -1,0 +1,107 @@
+class type:
+    def __init__(self, name, weakness, resistance):
+        self.name = name
+        self.weakness = weakness
+        self.resistance = resistance
+
+Normal = type("Normal", ["Fighting"], ["Ghost"])
+Fire = type("Fire", ["Water", "Rock", "Ground"], ["Fire", "Bug", "Grass"])
+Water = type("Water", ["Electric", "Grass"], ["Fire", "Water", "Ice"])
+Electric = type("Electric", ["Ground"], ["Electric", "Flying"])
+Poison = type("Poison", ["Bug", "Ground", "Psychic"], ["Poison", "Grass", "Fighting"])
+Bug = type("Bug", ["Fire", "Poison", "Rock", "Flying"], ["Grass", "Fighting", "Ground"])
+Grass = type("Grass", ["Fire", "Poison", "Bug", "Flying", "Ice"], ["Water", "Electric", "Grass", "Ground"])
+Fighting = type("Fighting", ["Flying", "Psychic"], ["Bug", "Rock"])
+Rock = type("Rock", ["Water", "Grass", "Fighting", "Ground"], ["Normal", "Fire", "Poison", "Flying"])
+Ground = type("Ground", ["Water", "Grass"], ["Electric", "Poison"])
+Flying = type("Flying", ["Electric", "Rock", "Ice"], ["Bug", "Grass", "Fighting", "Ground"])
+Psychic = type("Psychic", ["Bug"], ["Fighting", "Psychic", "Ghost"])
+Ice = type("Ice", ["Fire", "Fighting", "Rock"], ["Ice"])
+Ghost = type("Ghost", ["Ghost"], ["Normal", "Poison", "Fighting"])
+Dragon = type("Dragon", ["Ice", "Dragon"], ["Fire", "Water", "Electric", "Grass"])
+
+typesList = [Normal, Fire, Water, Electric, Poison,
+             Bug, Grass, Fighting, Rock, Ground,
+             Flying, Psychic, Ice, Ghost, Dragon]
+
+# list of all type combinations in the game
+combo1 = [Grass, Poison]
+combo2 = [Fire]
+combo3 = [Fire, Flying]
+combo4 = [Water]
+combo5 = [Bug]
+combo6 = [Bug, Flying]
+combo7 = [Bug, Poison]
+combo8 = [Normal, Flying]
+combo9 = [Normal]
+combo10 = [Poison]
+combo11 = [Electric]
+combo12 = [Ground]
+combo13 = [Poison, Ground]
+combo14 = [Poison, Flying]
+combo15 = [Bug, Grass]
+combo16 = [Fighting]
+combo17 = [Water, Fighting]
+combo18 = [Psychic]
+combo19 = [Water, Poison]
+combo20 = [Rock, Ground]
+combo21 = [Water, Psychic]
+combo22 = [Water, Ice]
+combo23 = [Ghost, Poison]
+combo24 = [Grass, Psychic]
+combo25 = [Ground, Rock]
+combo26 = [Grass]
+combo27 = [Ice, Psychic]
+combo28 = [Water, Flying]
+combo29 = [Rock, Water]
+combo30 = [Rock, Flying]
+combo31 = [Ice, Flying]
+combo32 = [Electric, Flying]
+combo33 = [Dragon]
+combo34 = [Dragon, Flying]
+
+comboList = [combo1,combo2, combo3, combo4, combo5, combo6, combo7, combo8, combo9, combo10,
+             combo11,combo12, combo13, combo14, combo15, combo16, combo17, combo18, combo19, combo20,
+             combo21,combo22, combo23, combo24, combo25, combo26, combo27, combo28, combo29, combo30,
+             combo31,combo32, combo33, combo34]
+
+
+# function that determines the weaknesses of any given type combination
+def determineWeakness(combo):
+    if len(combo) == 1:
+        return combo[0].weakness
+    else:
+        trueWeakness = []
+        for i in combo[0].weakness:
+            if i not in combo[1].resistance:
+                trueWeakness.append(i)
+        for i in combo[1].weakness:
+            if i not in combo[0].resistance and i not in trueWeakness:
+                trueWeakness.append(i)
+        return trueWeakness
+
+
+# open the text file, then write in the list of combinations with their respective weaknesses
+with open("/Users/sensosmith/Documents/GitHub/Pokemon-Team-Generator/TypeCoverage.txt", "w") as f:
+    for i in comboList:
+        weakness = list(determineWeakness(i))
+        if len(i) == 1:
+            f.write(i[0].name)
+        else:
+            f.write(i[0].name)
+            f.write("/")
+            f.write(i[1].name)
+        f.write(" is weak to: ")
+        if len(weakness) == 0:
+            f.write("nothing.")
+        f.write("[")
+        x = len(weakness)
+        for j in weakness:
+            f.write(j)
+            if x == 1:
+                f.write("]")
+            else:
+                f.write(", ")
+            x -= 1
+        f.write("\n")
+f.close
