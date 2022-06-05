@@ -131,7 +131,7 @@ totalPokemonList = [Venusaur, Charizard, Blastoise, Butterfree, Beedrill, Pidgeo
 
 availablePokemonList = list(totalPokemonList)
 
-gameVersion = "Error"
+gameVersion = ""
 
 party = []
 
@@ -277,15 +277,15 @@ def selectStarter():
     # mark appropriate HMs as covered by the starter
     hmList.remove(random.choice(chosenStarter.HMs))
 
-    secondSlotCandidates = list(availablePokemonList)
-    if select2(secondSlotCandidates) == 1:
+    nextSlotCandidates = list(availablePokemonList)
+    if selectSlot(nextSlotCandidates, 2) == 1:
         return 1
     else:
         print("No valid team could be found with the given starter: " + chosenStarter.name)
 
 
-# function for selecting the second Pokemon
-def select2(pokemonPool):
+# function for selecting the remaining five Pokemon
+def selectSlot(pokemonPool, slotNum):
     global party
     global hmList
     global secondHM
@@ -300,9 +300,15 @@ def select2(pokemonPool):
                 return 0
             potentialMember = random.choice(pokemonPool)
             if checkSameType(potentialMember) == 1:
-                if checkHM(potentialMember, 2) == 1:
+                if checkHM(potentialMember, slotNum) == 1:
                     if checkMutuallyExclusive(potentialMember) == 1:
-                        success2 = 1
+                        if slotNum == 6:
+                            if checkMoveCoverage(potentialMember) == 1:
+                                success2 = 1
+                            else:
+                                pokemonPool.remove(potentialMember)
+                        else:
+                            success2 = 1
                     else:
                         pokemonPool.remove(potentialMember)
                 else:
@@ -314,157 +320,22 @@ def select2(pokemonPool):
         #print("TEST: Successfully added member: " + potentialMember.name)
         # test code end
         pokemonPool.remove(potentialMember)
-        thirdSlotCandidates = list(pokemonPool)
-        if select3(thirdSlotCandidates) == 1:
-            success1 = 1
-        else:
-            party.remove(potentialMember)
-            hmList.append(secondHM)
-    return 1
-
-
-# function for selecting the third Pokemon
-def select3(pokemonPool):
-    global party
-    global hmList
-    global secondHM
-    global thirdHM
-    global fourthHM
-    global fifthHM
-    success1 = 0
-    while success1 == 0:
-        success2 = 0
-        while success2 == 0:
-            if len(pokemonPool) == 0:
-                return 0
-            potentialMember = random.choice(pokemonPool)
-            if checkSameType(potentialMember) == 1:
-                if checkHM(potentialMember, 3) == 1:
-                    if checkMutuallyExclusive(potentialMember) == 1:
-                        success2 = 1
-                    else:
-                        pokemonPool.remove(potentialMember)
-                else:
-                    pokemonPool.remove(potentialMember)
+        nextSlotCandidates = list(pokemonPool)
+        if slotNum < 6:
+            if selectSlot(nextSlotCandidates, slotNum + 1) == 1:
+                success1 = 1
             else:
-                pokemonPool.remove(potentialMember)
-        party.append(potentialMember)
-        # test code start
-        #print("TEST: Successfully added member: " + potentialMember.name)
-        # test code end
-        pokemonPool.remove(potentialMember)
-        fourthSlotCandidates = list(pokemonPool)
-        if select4(fourthSlotCandidates) == 1:
+                party.remove(potentialMember)
+                if slotNum == 2:
+                    hmList.append(secondHM)
+                elif slotNum == 3:
+                    hmList.append(thirdHM)
+                elif slotNum == 4:
+                    hmList.append(fourthHM)
+                elif slotNum == 5:
+                    hmList.append(fifthHM)
+        else:
             success1 = 1
-        else:
-            party.remove(potentialMember)
-            hmList.append(thirdHM)
-    return 1
-
-
-# function for selecting the fourth Pokemon
-def select4(pokemonPool):
-    global party
-    global hmList
-    global secondHM
-    global thirdHM
-    global fourthHM
-    global fifthHM
-    success1 = 0
-    while success1 == 0:
-        success2 = 0
-        while success2 == 0:
-            if len(pokemonPool) == 0:
-                return 0
-            potentialMember = random.choice(pokemonPool)
-            if checkSameType(potentialMember) == 1:
-                if checkHM(potentialMember, 4) == 1:
-                    if checkMutuallyExclusive(potentialMember) == 1:
-                        success2 = 1
-                    else:
-                        pokemonPool.remove(potentialMember)
-                else:
-                    pokemonPool.remove(potentialMember)
-            else:
-                pokemonPool.remove(potentialMember)
-        party.append(potentialMember)
-        # test code start
-        #print("TEST: Successfully added member: " + potentialMember.name)
-        # test code end
-        pokemonPool.remove(potentialMember)
-        fifthSlotCandidates = list(pokemonPool)
-        if select5(fifthSlotCandidates) == 1:
-            success1 = 1
-        else:
-            party.remove(potentialMember)
-            hmList.append(fourthHM)
-    return 1
-
-
-# function for selecting the fifth Pokemon
-def select5(pokemonPool):
-    global party
-    global hmList
-    global secondHM
-    global thirdHM
-    global fourthHM
-    global fifthHM
-    success1 = 0
-    while success1 == 0:
-        success2 = 0
-        while success2 == 0:
-            if len(pokemonPool) == 0:
-                return 0
-            potentialMember = random.choice(pokemonPool)
-            if checkSameType(potentialMember) == 1:
-                if checkHM(potentialMember, 5) == 1:
-                    if checkMutuallyExclusive(potentialMember) == 1:
-                        success2 = 1
-                    else:
-                        pokemonPool.remove(potentialMember)
-                else:
-                    pokemonPool.remove(potentialMember)
-            else:
-                pokemonPool.remove(potentialMember)
-        party.append(potentialMember)
-        # test code start
-        #print("TEST: Successfully added member: " + potentialMember.name)
-        # test code end
-        pokemonPool.remove(potentialMember)
-        sixthSlotCandidates = list(pokemonPool)
-        if select6(sixthSlotCandidates) == 1:
-            success1 = 1
-        else:
-            party.remove(potentialMember)
-            hmList.append(fifthHM)
-    return 1
-
-
-# function for selecting the sixth Pokemon
-def select6(pokemonPool):
-    global party
-    success = 0
-    while success == 0:
-        if len(pokemonPool) == 0:
-            return 0
-        potentialMember = random.choice(pokemonPool)
-        if checkSameType(potentialMember) == 1:
-            if checkHM(potentialMember, 6) == 1:
-                if checkMutuallyExclusive(potentialMember) == 1:
-                    if checkMoveCoverage(potentialMember) == 1:
-                        success = 1
-                    else:
-                        pokemonPool.remove(potentialMember)
-                else:
-                    pokemonPool.remove(potentialMember)
-            else:
-                pokemonPool.remove(potentialMember)
-        else:
-            pokemonPool.remove(potentialMember)
-    party.append(potentialMember)
-    # test code start
-    #print("TEST: Successfully added member: " + potentialMember.name)
-    # test code end
     return 1
 
 
