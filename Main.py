@@ -1,4 +1,6 @@
 import random
+import tkinter
+
 
 class type:
     def __init__(self, name):
@@ -81,7 +83,7 @@ Gengar = pokemon("Gengar", 94, [Ghost, Poison], [strength], [Electric, Fighting,
 Onix = pokemon("Onix", 95, [Rock, Ground], [strength], [Rock, Ground])
 Hypno = pokemon("Hypno", 97, [Psychic], [flash], [Fighting, Psychic])
 Kingler = pokemon("Kingler", 99, [Water], [cut, surf, strength], [Water, Ice])
-Electrode = pokemon("Electrode", 101, [Electric], [flash], [Electrode])
+Electrode = pokemon("Electrode", 101, [Electric], [flash], [Electric])
 Exeggutor = pokemon("Exeggutor", 103, [Grass, Psychic], [strength], [Grass, Psychic])
 Marowak = pokemon("Marowak", 105, [Ground], [strength], [Fire, Water, Fighting, Ground, Ice])
 Hitmonlee = pokemon("Hitmonlee", 106, [Fighting], [strength], [Fighting])
@@ -141,6 +143,8 @@ secondHM = 0
 thirdHM = 0
 fourthHM = 0
 fifthHM = 0
+
+alreadyRun = 0
 
 
 # function for selecting game version and changing Pokemon availability accordingly
@@ -281,7 +285,7 @@ def selectStarter():
     if selectSlot(nextSlotCandidates, 2) == 1:
         return 1
     else:
-        print("No valid team could be found with the given starter: " + chosenStarter.name)
+        return 0
 
 
 # function for selecting the remaining five Pokemon
@@ -342,58 +346,127 @@ def selectSlot(pokemonPool, slotNum):
 # function for sorting the party
 def sortParty():
     global party
-    slot1 = 0
-    slot2 = 0
-    slot3 = 0
-    slot4 = 0
-    slot5 = 0
-    slot6 = 0
-    counter = 0
-    for i in range(6):
-        for j in range(6):
-            if party[i].number < party[j].number:
-                counter += 1
-        if counter == 5:
-            slot1 = i
-        elif counter == 4:
-            slot2 = i
-        elif counter == 3:
-            slot3 = i
-        elif counter == 2:
-            slot4 = i
-        elif counter == 1:
-            slot5 = i
-        else:
-            slot6 = i
+    if len(party) == 6:
+        slot1 = 0
+        slot2 = 0
+        slot3 = 0
+        slot4 = 0
+        slot5 = 0
+        slot6 = 0
         counter = 0
-    sortedParty = []
-    sortedParty.append(party[slot1])
-    sortedParty.append(party[slot2])
-    sortedParty.append(party[slot3])
-    sortedParty.append(party[slot4])
-    sortedParty.append(party[slot5])
-    sortedParty.append(party[slot6])
-    party = sortedParty
+        for i in range(6):
+            for j in range(6):
+                if party[i].number < party[j].number:
+                    counter += 1
+            if counter == 5:
+                slot1 = i
+            elif counter == 4:
+                slot2 = i
+            elif counter == 3:
+                slot3 = i
+            elif counter == 2:
+                slot4 = i
+            elif counter == 1:
+                slot5 = i
+            else:
+                slot6 = i
+            counter = 0
+        sortedParty = []
+        sortedParty.append(party[slot1])
+        sortedParty.append(party[slot2])
+        sortedParty.append(party[slot3])
+        sortedParty.append(party[slot4])
+        sortedParty.append(party[slot5])
+        sortedParty.append(party[slot6])
+        party = sortedParty
     return party
 
 
 # function for displaying the party
-def displayParty():
+def displayResult(success):
     global party
-    for i in range(6):
-        print(party[i].name + " - ", end="")
-        if len(party[i].HMs) == 0:
-            print("None")
-        elif len(party[i].HMs) == 1:
-            print(party[i].HMs[0].name)
-        elif len(party[i].HMs) == 2:
-            print(party[i].HMs[0].name + ", " + party[i].HMs[1].name)
-        elif len(party[i].HMs) == 3:
-            print(party[i].HMs[0].name + ", " + party[i].HMs[1].name + ", " + party[i].HMs[2].name)
+    global label_memberList
+    global label_noTeam
+    if success == 1:
+        for i in range(6):
+            if len(party[i].HMs) == 0:
+                label_memberList[i] = tkinter.Label(text=party[i].name + ' - None')
+                label_memberList[i].pack(side = 'top')
+            elif len(party[i].HMs) == 1:
+                label_memberList[i] = tkinter.Label(text=party[i].name + ' - ' + party[i].HMs[0].name)
+                label_memberList[i].pack(side = 'top')
+            elif len(party[i].HMs) == 2:
+                label_memberList[i] = tkinter.Label(text=party[i].name + ' - ' + party[i].HMs[0].name + ', ' + party[i].HMs[1].name)
+                label_memberList[i].pack(side = 'top')
+            elif len(party[i].HMs) == 3:
+                label_memberList[i] = tkinter.Label(text=party[i].name + ' - ' + party[i].HMs[0].name + ', ' + party[i].HMs[1].name + ', ' + party[i].HMs[2].name)
+                label_memberList[i].pack(side = 'top')
+    else:
+        label_noTeam = tkinter.Label(text='No valid team could be found with the given starter: ' + party[0].name)
+        label_noTeam.pack(side = 'top')
 
 
-chooseVersion()
-if selectStarter() == 1:
-    print(gameVersion + " Version")
+# function for clearing the screen when repeating team generation
+def hideResult():
+    global label_version
+    global label_memberList
+    global label_noTeam
+    if label_version.winfo_viewable() == True:
+        label_version.pack_forget()
+    if label_memberList[5].winfo_viewable() == True:
+        for i in label_memberList:
+            i.pack_forget()
+    if label_noTeam.winfo_viewable() == True:
+        label_noTeam.pack_forget()
+
+
+def doTheThing():
+    global availablePokemonList
+    global gameVersion
+    global party
+    global hmList
+    global firstHM
+    global secondHM
+    global thirdHM
+    global fourthHM
+    global fifthHM
+    global alreadyRun
+    availablePokemonList = list(totalPokemonList)
+    gameVersion = ""
+    party = []
+    hmList = [cut, fly, surf, strength, flash]
+    firstHM = 0
+    secondHM = 0
+    thirdHM = 0
+    fourthHM = 0
+    fifthHM = 0
+    hideResult()
+    chooseVersion()
+    success = selectStarter()
+    global label_version
+    label_version = tkinter.Label(text=gameVersion + ' Version')
+    label_version.pack(side = 'top')
     sortParty()
-    displayParty()
+    displayResult(success)
+        
+        
+
+
+root = tkinter.Tk()
+root.geometry('400x190')
+root.title('Pokemon Team Generator')
+
+label_version = tkinter.Label()
+label_member1 = tkinter.Label()
+label_member2 = tkinter.Label()
+label_member3 = tkinter.Label()
+label_member4 = tkinter.Label()
+label_member5 = tkinter.Label()
+label_member6 = tkinter.Label()
+label_memberList = [label_member1, label_member2, label_member3, label_member4, label_member5, label_member6]
+label_noTeam = tkinter.Label()
+
+button = tkinter.Button(root, text = 'Generate a Team', command = doTheThing)
+button.pack(side = 'top')
+
+root.mainloop()
