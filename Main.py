@@ -1,5 +1,5 @@
 import random
-import tkinter
+import tkinter as tk
 
 
 class type:
@@ -144,7 +144,34 @@ thirdHM = 0
 fourthHM = 0
 fifthHM = 0
 
-alreadyRun = 0
+allowLegendaries = 0
+allowTypeOverlap = 0
+
+# function for setting deciding variable for legendaries
+def decideLegendaries():
+    global allowLegendaries
+    if legendariesCheck.get() == 1:
+        allowLegendaries = 1
+    else:
+        allowLegendaries = 0
+
+
+# function for setting deciding variable for overlapping types
+def decideTypeOverlap():
+    global allowTypeOverlap
+    if typeOverlapCheck.get() == 1:
+        allowTypeOverlap = 1
+    else:
+        allowTypeOverlap = 0
+
+
+
+# function for removing legendaries
+def removeLegendaries():
+    global availablePokemonList
+    legendaries = [Articuno, Zapdos, Moltres]
+    for i in legendaries:
+        availablePokemonList.remove(i)
 
 
 # function for selecting game version and changing Pokemon availability accordingly
@@ -166,15 +193,19 @@ def chooseVersion():
 # function for preventing adding Pokemon of the same type as previously selected Pokemon
 def checkSameType(candidate):
     global party
-    partyTypes = []
-    for i in party:
-        for j in i.types:
-            if partyTypes.count(j) == 0:
-                partyTypes.append(j)
-    for i in candidate.types:
-        if partyTypes.count(i) > 0:
-            return 0
-    return 1
+    global allowTypeOverlap
+    if allowTypeOverlap == 0:
+        partyTypes = []
+        for i in party:
+            for j in i.types:
+                if partyTypes.count(j) == 0:
+                    partyTypes.append(j)
+        for i in candidate.types:
+            if partyTypes.count(i) > 0:
+                return 0
+        return 1
+    else:
+        return 1
 
 
 # function for verifying HM coverage
@@ -390,19 +421,19 @@ def displayResult(success):
     if success == 1:
         for i in range(6):
             if len(party[i].HMs) == 0:
-                label_memberList[i] = tkinter.Label(text=party[i].name + ' - None')
+                label_memberList[i] = tk.Label(text=party[i].name + ' - None')
                 label_memberList[i].pack(side = 'top')
             elif len(party[i].HMs) == 1:
-                label_memberList[i] = tkinter.Label(text=party[i].name + ' - ' + party[i].HMs[0].name)
+                label_memberList[i] = tk.Label(text=party[i].name + ' - ' + party[i].HMs[0].name)
                 label_memberList[i].pack(side = 'top')
             elif len(party[i].HMs) == 2:
-                label_memberList[i] = tkinter.Label(text=party[i].name + ' - ' + party[i].HMs[0].name + ', ' + party[i].HMs[1].name)
+                label_memberList[i] = tk.Label(text=party[i].name + ' - ' + party[i].HMs[0].name + ', ' + party[i].HMs[1].name)
                 label_memberList[i].pack(side = 'top')
             elif len(party[i].HMs) == 3:
-                label_memberList[i] = tkinter.Label(text=party[i].name + ' - ' + party[i].HMs[0].name + ', ' + party[i].HMs[1].name + ', ' + party[i].HMs[2].name)
+                label_memberList[i] = tk.Label(text=party[i].name + ' - ' + party[i].HMs[0].name + ', ' + party[i].HMs[1].name + ', ' + party[i].HMs[2].name)
                 label_memberList[i].pack(side = 'top')
     else:
-        label_noTeam = tkinter.Label(text='No valid team could be found with the given starter: ' + party[0].name)
+        label_noTeam = tk.Label(text='No valid team could be found with the given starter: ' + party[0].name)
         label_noTeam.pack(side = 'top')
 
 
@@ -420,7 +451,8 @@ def hideResult():
         label_noTeam.pack_forget()
 
 
-def doTheThing():
+# function to run the entire process of team generation
+def generateTeam():
     global availablePokemonList
     global gameVersion
     global party
@@ -430,8 +462,10 @@ def doTheThing():
     global thirdHM
     global fourthHM
     global fifthHM
-    global alreadyRun
+    global allowLegendaries
     availablePokemonList = list(totalPokemonList)
+    if allowLegendaries == 0:
+        removeLegendaries()
     gameVersion = ""
     party = []
     hmList = [cut, fly, surf, strength, flash]
@@ -444,7 +478,7 @@ def doTheThing():
     chooseVersion()
     success = selectStarter()
     global label_version
-    label_version = tkinter.Label(text=gameVersion + ' Version')
+    label_version = tk.Label(text=gameVersion + ' Version')
     label_version.pack(side = 'top')
     sortParty()
     displayResult(success)
@@ -452,21 +486,29 @@ def doTheThing():
         
 
 
-root = tkinter.Tk()
-root.geometry('400x190')
+root = tk.Tk()
+root.geometry('400x230')
 root.title('Pokemon Team Generator')
 
-label_version = tkinter.Label()
-label_member1 = tkinter.Label()
-label_member2 = tkinter.Label()
-label_member3 = tkinter.Label()
-label_member4 = tkinter.Label()
-label_member5 = tkinter.Label()
-label_member6 = tkinter.Label()
+label_version = tk.Label()
+label_member1 = tk.Label()
+label_member2 = tk.Label()
+label_member3 = tk.Label()
+label_member4 = tk.Label()
+label_member5 = tk.Label()
+label_member6 = tk.Label()
 label_memberList = [label_member1, label_member2, label_member3, label_member4, label_member5, label_member6]
-label_noTeam = tkinter.Label()
+label_noTeam = tk.Label()
 
-button = tkinter.Button(root, text = 'Generate a Team', command = doTheThing)
+button = tk.Button(root, text = 'Generate a Team', command = generateTeam)
 button.pack(side = 'top')
+
+legendariesCheck = tk.IntVar()
+chkBtn_allowLegendaries = tk.Checkbutton(root, text = 'Allow Legendaries', variable = legendariesCheck, onvalue = 1, offvalue = 0, command = decideLegendaries)
+chkBtn_allowLegendaries.pack(side = 'bottom')
+
+typeOverlapCheck = tk.IntVar()
+chkBtn_allowTypeOverlap = tk.Checkbutton(root, text = 'Allow Overlapping Types', variable = typeOverlapCheck, onvalue = 1, offvalue = 0, command = decideTypeOverlap)
+chkBtn_allowTypeOverlap.pack(side = 'bottom')
 
 root.mainloop()
