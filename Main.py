@@ -43,6 +43,19 @@ def removeVersionExclusives():
             availablePokemonList.remove(i)
 
 
+# function for removing/replacing trade evolutions if necessary
+def determineTrade():
+    global availablePokemonList
+    if combo_trade.get() == tradeOptions[1]:
+        for i in gen.tradeEvolutions:
+            availablePokemonList.remove(i)
+    elif combo_trade.get() == tradeOptions[2]:
+        for i in gen.tradeEvolutions:
+            availablePokemonList.remove(i)
+        for i in gen.tradePrevolutions:
+            availablePokemonList.append(i)
+
+
 # function for removing legendaries if necessary
 def determineLegendaries():
     global availablePokemonList
@@ -222,26 +235,27 @@ def sortParty():
 # function for displaying the party
 def displayResult(success):
     global party
-    global label_memberList
+    global memberList
     if success == 1:
         for i in range(6):
             if len(party[i].HMs) == 0:
-                label_memberList[i].config(text=party[i].name + ' - None')
+                memberList[i].set(party[i].name + ' - None')
             elif len(party[i].HMs) == 1:
-                label_memberList[i].config(text=party[i].name + ' - ' + party[i].HMs[0].name)
+                memberList[i].set(party[i].name + ' - ' + party[i].HMs[0].name)
             elif len(party[i].HMs) == 2:
-                label_memberList[i].config(text=party[i].name + ' - ' + party[i].HMs[0].name + ', ' + party[i].HMs[1].name)
+                memberList[i].set(party[i].name + ' - ' + party[i].HMs[0].name + ', ' + party[i].HMs[1].name)
             elif len(party[i].HMs) == 3:
-                label_memberList[i].config(text=party[i].name + ' - ' + party[i].HMs[0].name + ', ' + party[i].HMs[1].name + ', ' + party[i].HMs[2].name)
+                memberList[i].set(party[i].name + ' - ' + party[i].HMs[0].name + ', ' + party[i].HMs[1].name + ', ' + party[i].HMs[2].name)
     else:
-        label_memberList[0].config(text='No valid team could be found with the given starter: ' + party[0].name)
+        memberList[0].set('No valid team could be found with the given starter: ' + party[0].name)
 
 
 # function for clearing the screen when repeating team generation
 def hideResult():
-    global label_memberList
-    for i in label_memberList:
-        i.config(text = '')
+    global memberList
+    for i in memberList:
+        i.set('')
+    memberList[0].set('Generating...')
 
 
 # function to run the entire process of team generation
@@ -254,6 +268,7 @@ def generateTeam():
     availablePokemonList = list(gen.totalPokemonList)
     party = []
     removeVersionExclusives()
+    determineTrade()
     determineLegendaries()
     teamFound = selectStarter()
     sortParty()
@@ -261,7 +276,7 @@ def generateTeam():
 
 
 root = tk.Tk()
-root.geometry('400x270')
+root.geometry('400x300')
 root.title('Pokemon Team Generator')
 
 button = tk.Button(root, text = 'Generate a Team', command = generateTeam)
@@ -275,7 +290,7 @@ typeOverlapCheck = tk.IntVar()
 chkBtn_allowTypeOverlap = tk.Checkbutton(root, text = 'Allow Overlapping Types', variable = typeOverlapCheck, onvalue = 1, offvalue = 0)
 chkBtn_allowTypeOverlap.pack(side = 'bottom')
 
-versionOptions = ['Red', 'Blue']
+versionOptions = list(gen.versionsList)
 versionCheck = tk.StringVar
 combo_versions = ttk.Combobox(root, textvariable = versionOptions, values = versionOptions)
 combo_versions.current(0)
@@ -289,14 +304,24 @@ combo_starters = ttk.Combobox(root, textvariable = starterOptions, values = star
 combo_starters.current(0)
 combo_starters.pack(side = 'top')
 
-label_member1 = tk.Label(text = '')
-label_member2 = tk.Label(text = '')
-label_member3 = tk.Label(text = '')
-label_member4 = tk.Label(text = '')
-label_member5 = tk.Label(text = '')
-label_member6 = tk.Label(text = '')
-label_memberList = [label_member1, label_member2, label_member3, label_member4, label_member5, label_member6]
-for i in label_memberList:
-    i.pack(side = 'top')
+tradeOptions = ['Allow Trade Evolutions', 'Ban Trade Evolutions', 'Substitute Pre-Evolutions']
+tradeCheck = tk.StringVar
+combo_trade = ttk.Combobox(root, textvariable = tradeOptions, values = tradeOptions)
+combo_trade.current(0)
+combo_trade.pack(side = 'bottom')
+
+member1 = tk.StringVar('')
+member2 = tk.StringVar('')
+member3 = tk.StringVar('')
+member4 = tk.StringVar('')
+member5 = tk.StringVar('')
+member6 = tk.StringVar('')
+memberList = [member1, member2, member3, member4, member5, member6]
+label_member1 = tk.Label(textvariable = member1).pack(side = 'top')
+label_member2 = tk.Label(textvariable = member2).pack(side = 'top')
+label_member3 = tk.Label(textvariable = member3).pack(side = 'top')
+label_member4 = tk.Label(textvariable = member4).pack(side = 'top')
+label_member5 = tk.Label(textvariable = member5).pack(side = 'top')
+label_member6 = tk.Label(textvariable = member6).pack(side = 'top')
 
 root.mainloop()

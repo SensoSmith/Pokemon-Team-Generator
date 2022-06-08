@@ -118,6 +118,11 @@ Zapdos = pokemon("Zapdos", 145, [Electric, Flying], [fly, flash], [Electric, Fly
 Moltres = pokemon("Moltres", 146, [Fire, Flying], [fly], [Fire, Flying])
 Dragonite = pokemon("Dragonite", 149, [Dragon, Flying], [surf, strength], [Fire, Water, Electric, Ice])
 
+Kadabra = pokemon("Kadabra", 64, [Psychic], [flash], [Fighting, Ground, Psychic])
+Machoke = pokemon("Machoke", 67, [Fighting], [strength], [Fire, Fighting, Rock, Ground])
+Graveler = pokemon("Graveler", 75, [Rock, Ground], [strength], [Fire, Fighting, Rock, Ground])
+Haunter = pokemon("Haunter", 93, [Ghost, Poison], [], [Electric, Psychic])
+
 totalPokemonList = [Venusaur, Charizard, Blastoise, Butterfree, Beedrill, Pidgeot, Raticate, Fearow,
                     Arbok, Raichu, Sandslash, Nidoqueen, Nidoking, Clefable, Ninetales, Wigglytuff,
                     Golbat, Vileplume, Parasect, Venomoth, Dugtrio, Persian, Golduck, Primeape,
@@ -132,12 +137,15 @@ totalPokemonList = [Venusaur, Charizard, Blastoise, Butterfree, Beedrill, Pidgeo
 starters = [Venusaur, Charizard, Blastoise]
 starterOptions = ['Bulbasaur', 'Charmander', 'Squirtle']
 
-legendaries = [Articuno, Zapdos, Moltres]
-
 versionsList = ["Red", "Blue"]
 redExclusives = [Arbok, Vileplume, Primeape, Arcanine, Scyther, Electabuzz]
 blueExclusives = [Sandslash, Ninetales, Persian, Victreebel, Magmar, Pinsir]
 exclusivesListList = [redExclusives, blueExclusives]
+
+tradeEvolutions = [Alakazam, Machamp, Golem, Gengar]
+tradePrevolutions = [Kadabra, Machoke, Graveler, Haunter]
+
+legendaries = [Articuno, Zapdos, Moltres]
 
 # lists of mutually exclusive Pokemon
 MEgroup1 = [Hitmonlee, Hitmonchan]
